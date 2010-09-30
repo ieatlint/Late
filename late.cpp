@@ -386,8 +386,14 @@ void Late::predWindowInit() {
 		lay->addWidget( msg );
 	}
 
-	QPushButton *bookmark = new QPushButton( "Add Bookmark" );
-	connect( bookmark, SIGNAL( clicked() ), this, SLOT( addBookmark() ) );
+	QPushButton *bookmark = new QPushButton;
+	if( bookmarks.contains( nbusInfo ) ) {
+		bookmark->setText( "Remove Bookmark" );
+		connect( bookmark, SIGNAL( clicked() ), this, SLOT( delBookmark() ) );
+	} else {
+		bookmark->setText( "Add Bookmark" );
+		connect( bookmark, SIGNAL( clicked() ), this, SLOT( addBookmark() ) );
+	}
 	lay->addWidget( bookmark );
 
 	widget->show();
@@ -422,6 +428,10 @@ void Late::addHistory() {
 	while( history.length() > 10 ) {
 		history.removeLast();
 	}
+}
+
+void Late::delBookmark() {
+	bookmarks.removeOne( nbusInfo );
 }
 
 void Late::addBookmark() {

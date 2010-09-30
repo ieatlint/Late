@@ -100,6 +100,7 @@ class Late : public QMainWindow {
 		void bookmarkWindowInit();
 
 		void addBookmark();
+		void delBookmark();
 		void loadBookmarkInfo( QListWidgetItem * );
 		void addHistory();
 		void loadHistoryInfo( QListWidgetItem * );
