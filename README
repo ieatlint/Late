@@ -1,0 +1,41 @@
+Late is a NextBus transit application written for Maemo using Qt.
+
+It provides arrival estimates for transit systems supporting NextBus's official
+API.
+
+This includes:
+AC Transit
+California University of Pennsylvania
+Charm City Circulator
+MBTA
+Massachusetts Institute of Technology
+Portland Streetcar
+Rutgers University
+Rutgers-Newark College Town Shuttle
+San Francisco MUNI
+
+
+The application is able to query arrival estimates for all stops and lines in
+the transit agencies supported.  It will also display information messages from
+the agency such as those seen on NextBus signs and the official website.
+
+
+Features:
+ - Supports 9 transit agencies in one application
+ - Downloads data for each agency/line when requested
+ - Persistent history showing recently viewed stops across all agencies
+ - Bookmarking support
+
+
+
+There are many planned features for the application, including:
+ - Support for all NextBus agencies (60+ of them) by using an alternate API
+ - More configuration options
+ - GPS-related features, such as finding the nearest stop
+ - Show additional arrival information, such as how far away a bus is and what
+   stop it's currently at
+ - Arrival estimates for when a specific bus will arrive at a specific stop
+
+
+This application is in no way affiliated with NextBus or any of the named
+transit agencies, nor is it in any way endorsed by them.
