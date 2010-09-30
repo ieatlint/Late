@@ -414,15 +414,10 @@ void Late::predWindowInit() {
 }
 
 void Late::addHistory() {
-	history.prepend( nbusInfo );
-
 	// only allow a stop to be in the list once
-	for( int i = 1; history.length() > i; i++ ) {
-		if( history.at( i ) == nbusInfo ) {
-			history.removeAt( i );
-			break;
-		}
-	}
+	history.removeOne( nbusInfo );
+
+	history.prepend( nbusInfo );
 
 	//trim the list to be under 10 .. make this a user-configurable variable sometime
 	while( history.length() > 10 ) {
@@ -432,16 +427,21 @@ void Late::addHistory() {
 
 void Late::delBookmark() {
 	bookmarks.removeOne( nbusInfo );
+
+	QPushButton *bookmark = qobject_cast<QPushButton *>( QObject::sender() );
+	bookmark->setText( "Add Bookmark" );
+	bookmark->disconnect( SIGNAL( clicked() ) );
+	connect( bookmark, SIGNAL( clicked() ), this, SLOT( addBookmark() ) );
 }
 
 void Late::addBookmark() {
-	for( int i = 0; bookmarks.length() > i; i++ ) {
-		if( bookmarks.at( i ) == nbusInfo ) {
-			return;
-		}
-	}
+	if( !bookmarks.contains( nbusInfo ) )
+		bookmarks.append( nbusInfo );
 
-	bookmarks.append( nbusInfo );
+	QPushButton *bookmark = qobject_cast<QPushButton *>( QObject::sender() );
+	bookmark->setText( "Remove Bookmark" );
+	bookmark->disconnect( SIGNAL( clicked() ) );
+	connect( bookmark, SIGNAL( clicked() ), this, SLOT( delBookmark() ) );
 }
 
 
@@ -468,8 +468,8 @@ void Late::bookmarkWindowInit() {
 	}
 	
 	if( bookmarks.isEmpty() ) {
-		// Set this to not be clickable
-		new QListWidgetItem( "Bookmark list is empty", list );
+		QListWidgetItem *empty = new QListWidgetItem( "Bookmark list is empty", list );
+		empty->setFlags( Qt::NoItemFlags );
 	} else {
 		connect( list, SIGNAL( itemActivated( QListWidgetItem * ) ), this, SLOT( loadBookmarkInfo( QListWidgetItem * ) ) );
 	}
@@ -558,8 +558,8 @@ void Late::historyWindowInit() {
 	}
 	
 	if( history.isEmpty() ) {
-		// Set this to not be clickable?
-		new QListWidgetItem( "History list is empty", list );
+		QListWidgetItem *empty = new QListWidgetItem( "History list is empty", list );
+		empty->setFlags( Qt::NoItemFlags );
 	} else {
 		connect( list, SIGNAL( itemActivated( QListWidgetItem * ) ), this, SLOT( loadHistoryInfo( QListWidgetItem * ) ) );
 	}
